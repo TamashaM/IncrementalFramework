@@ -12,7 +12,6 @@ from utils.config_reader import Config
 
 import os
 
-chunk_size = 100000  # 4sec
 
 
 def butter_highpass_filter(data, cutoff, fs, order):
@@ -24,7 +23,8 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return y
 
 
-def data_reader(df, file_path, AD, glutamate, character, date):
+def data_reader(df, file_path, AD, glutamate, character, date, config):
+    chunk_size = config.chunk_size  # 4sec
     channel_raw_data = McsPy.McsData.RawData(file_path)
     AD = AD
     print("-------------------------------------------------------------------")
@@ -93,7 +93,7 @@ def data_reader(df, file_path, AD, glutamate, character, date):
         print("Num of samples ", len(signal_chunks))
 
         for signal_chunk in signal_chunks:
-            signal_chunk_filtered = butter_highpass_filter(signal_chunk, 300, 25000, 3)
+            signal_chunk_filtered = butter_highpass_filter(signal_chunk, config.cut_off, config.sampling_frequency, 3)
             fft_signal = [abs(i) for i in fft(signal_chunk_filtered)][:int(chunk_size / 2)]  # upto 300Hz
             downsampled = np.mean(np.array(fft_signal).reshape(-1, 50), axis=1)
 
@@ -136,7 +136,7 @@ def run_experiment(config):
             #"63:1
             #"6848":2
             #"98":3
-            df = data_reader(df, path, label, glutamate, classes[j][-3:], date)
+            df = data_reader(df, path, label, glutamate, classes[j][-3:], date, config)
             if len(df) > 0:
                 df.to_pickle(
                     "./data/dataframes_pre_glut_with_margin/" + date + "_hfc_fft_100k_pre_glu_overlap_none_avg/" + str(
@@ -362,6 +362,7 @@ if __name__ == "__main__":
     config.glutamate = "pre"  # use "post" for post-glutamate recordings
     config.chunk_size = 100000  # 4s
     config.cut_off = 300
+    config.sampling_frequency = 25000
     config.h5_path = "/media/tmalepathira/Tamasha/h5files/"
 
     run_experiment(config)
