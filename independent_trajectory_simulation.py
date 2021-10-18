@@ -4,6 +4,7 @@ from utils.config_reader import Config
 
 import random
 
+
 def run_experiment(config):
     random.seed(config.seed)
 
@@ -15,8 +16,7 @@ def run_experiment(config):
         traj = Trajectory()
 
         traj_points_all.append(traj.get_traj_points(add_noise=config.add_noise, gap=config.gap))
-        traj_names.append("traj_{}".format(i+1))
-
+        traj_names.append("traj_{}".format(i + 1))
 
     # create the incremental learner
     incremental_learner = IncrementalLearner(config)

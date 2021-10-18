@@ -9,6 +9,8 @@ import models
 import os
 import itertools
 
+from utils.plot_utils import get_s
+
 
 class IncrementalLearner:
     def __init__(self, config):
@@ -37,13 +39,12 @@ class IncrementalLearner:
 
         coordinate_dict = {
         }
+        self.num_increments = traj_points_all[0].shape[0]
 
         subplot_x = 1
-        subplot_y = 5
+        subplot_y = self.num_increments
         fig, axs = plt.subplots(subplot_x, subplot_y, sharex=True, sharey=True, figsize=(15, 2), num=1)
         axs = axs.flatten()
-
-        self.num_increments = traj_points_all[0].shape[0]
 
         indices = np.arange(self.num_increments)
         num_traj = len(traj_points_all)
@@ -102,9 +103,15 @@ class IncrementalLearner:
                 x_y_coordinates = [[x, y] for x, y in zip(x_centroids, y_centroids)]
                 coordinate_dict[traj_names[i]] = x_y_coordinates
 
-                axs[index].scatter(df_traj[x_name], df_traj[y_name], c=df_traj["label"], cmap=color, s=10, vmin=-2,
+                axs[index].scatter(df_traj[x_name], df_traj[y_name],
+                                   c=df_traj["label"],
+                                   cmap=color,
+                                   s=get_s(df_traj, x_name, y_name),
+                                   label =traj_names[i],
+                                   vmin=-2,
                                    marker=marker,
-                                   vmax=num_traj * self.num_increments, alpha=1)
+                                   vmax=num_traj * self.num_increments,
+                                   alpha=1)
 
                 for j in range(len(x_centroids) - 1):
                     axs[index].annotate("", xytext=(x_centroids[j], y_centroids[j]),
@@ -116,4 +123,5 @@ class IncrementalLearner:
                                                              index=False)
         plt.savefig(os.path.join(results_dir, "{}.png".format(sim_name)), bbox_inches='tight')
         plt.savefig(os.path.join(results_dir, "{}.svg".format(sim_name)), bbox_inches='tight')
+        plt.legend()
         plt.show()
