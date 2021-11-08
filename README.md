@@ -1,4 +1,4 @@
-# IncrementalFramwork
+# IncrementalFramework
 
 This repository contains the code related to the paper "An Incrementally Learned VisualizationFramework for Longitudinal Multi-Electrode Array Experiments".
 
