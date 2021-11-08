@@ -32,7 +32,7 @@ if __name__ == "__main__":
     config = Config()
 
     config.seed = 42
-    config.model_name = "PCA"
+    config.model_name = "SONG"
     config.sim_name = "{}_sim1_2".format(config.model_name)
     config.journal_visualizations = False
     config.results_dir = "./results/simulation/"

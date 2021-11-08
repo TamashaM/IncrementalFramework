@@ -61,7 +61,7 @@ if __name__ == "__main__":
     config = Config()
 
     config.seed = 42
-    config.model_name = "UMAP"
+    config.model_name = "SONG"
     config.sim_name = "{}_sim2".format(config.model_name)
     config.journal_visualizations = True
     config.results_dir = "./results/simulation/"
