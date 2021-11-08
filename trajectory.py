@@ -53,7 +53,7 @@ class Trajectory():
 
         return traj_equation
 
-    def get_traj_points(self, max_time=1000, num_increments=5, add_noise=False, gap=0):
+    def get_traj_points(self, max_time=500, num_increments=5, add_noise=False, gap=0):
         points_per_increment = int(max_time / num_increments)
         increments = np.arange(0, max_time, points_per_increment)
 
