@@ -1,6 +1,6 @@
 # IncrementalFramework
 
-This repository contains the code related to the paper "An Incrementally Learned VisualizationFramework for Longitudinal Multi-Electrode Array Experiments".
+This repository contains the code related to the paper "An Incrementally Learned Visualization Framework for Longitudinal Multi-Electrode Array Experiments".
 
 	1.incremental_framework.py
 The code related to the incremental framework which can be used to incrementally train the model and generate partial visualizations at each session. This framework is used with both simulated and experimental data in scripts 2,3 and 4.
